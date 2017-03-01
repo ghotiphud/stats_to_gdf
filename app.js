@@ -171,15 +171,16 @@ function buildGDF(app) {
 		});
 	});
 
-	let nodeDef = "nodedef>name VARCHAR,label VARCHAR,chunks VARCHAR\n";
+	let nodeDef = "nodedef>name VARCHAR,label VARCHAR,chunks VARCHAR, width DOUBLE\n";
 	let nodeDefs = nodes.map((node) => [
 			node.id, 
 			"'" + node.label + "'", 
-			"'" + node.chunks + "'"
+			"'" + node.chunks + "'",
+			node.size
 		].join(","));
 	
-	let edgeDef = "edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN\n";
-	let edgeDefs = edges.map((edge) => [edge.source, edge.target, true].join(","));
+	let edgeDef = "edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,weight DOUBLE\n";
+	let edgeDefs = edges.map((edge) => [edge.source, edge.target, true, edge.weight].join(","));
 
 	return nodeDef + 
 		nodeDefs.join("\n") + "\n" +
